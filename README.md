@@ -169,7 +169,7 @@ Shipping `platforms: ["macOS", "Windows"]` without that would be a UI lying abou
 3. **Verifying `$HOME` expansion**, or substituting `$env:USERPROFILE`, in the hook's `command` field on Windows. This is unverified there; on macOS it works (see [`docs/hook-payload.md`](./docs/hook-payload.md)).
 4. **Confirming the payload shape is identical** on Windows — run [`scripts/probe-artifact-hook.sh`](./scripts/probe-artifact-hook.sh)'s PowerShell equivalent and compare against the captured macOS payload.
 
-There's a plausible better path than a second script: a **"Setup Hook" command** inside the extension that writes the correct hook for the host platform, using [`runPowerShellScript`](https://developers.raycast.com/utilities/functions/runpowershellscript) on Windows. That would improve the setup story on macOS too, which today is "copy a file and hand-edit JSON."
+There's a plausible better path than a second script: a **"Setup Hook" command** inside the extension that writes the correct hook for the host platform, using [`runPowerShellScript`](https://developers.raycast.com/utilities/functions/runpowershellscript) on Windows. That would improve the setup story on macOS too, which today is "copy a file and hand-edit JSON." Notes in [`docs/shelf.md`](./docs/shelf.md).
 
 ### Want it? Help test it
 
