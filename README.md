@@ -35,9 +35,26 @@ One extension, one honest dependency.
 There is no artifacts API available to individual users, so this extension doesn't call one. Instead:
 
 1. **A Claude Code hook** watches for artifacts as they're published and appends each one to a local index at `~/.claude/artifacts.json`.
-2. **The Raycast command** reads that file — instantly, offline, no network call.
+2. **The Raycast commands** read that file — instantly, offline, no network call.
 
 That's the whole architecture. It's a local file and a list.
+
+### Commands
+
+**Search Artifacts** — the list, newest first.
+
+| Action                                                     |                                                                                                          |
+| ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| **Open**                                                   | ⏎                                                                                                        |
+| **Copy Link** / **Copy Title**                             | ⌘⇧C / ⌘⌥C                                                                                                |
+| **Open Folder**                                            | ⌘O — the directory the artifact was published from                                                       |
+| **Pin Artifact**                                           | ⌘. — pinned artifacts collect in a **Pinned** section at the top, and stay there inside a project filter |
+| **View Claude Code Artifacts** / **View Claude Artifacts** | ⌘⇧O / ⌘⇧G — the two galleries on claude.ai, offered in every state including the empty ones              |
+
+Filter by project once more than one project has published, and search matches title and project.
+
+**Run Doctor** — checks that recording still works, and recovers anything it missed. See
+[When the list stops growing](#when-the-list-stops-growing--the-run-doctor-command).
 
 ### Setup
 
