@@ -12,6 +12,11 @@ are closed for legal or terms-of-service reasons rather than technical ones.
 Two commands: **Search Artifacts** (`src/search-artifacts.tsx`) and **Run Doctor**
 (`src/doctor.tsx`).
 
+Two places hold reasoning that is not in the code: `docs/solutions/` collects writeups of
+problems already solved here, filed by category with YAML frontmatter (`module`, `tags`,
+`problem_type`) — relevant when you are working in an area one of them covers. `CONCEPTS.md`
+defines the vocabulary the rest of these docs use without redefining.
+
 ## The data flow, and who writes what
 
 ```mermaid
