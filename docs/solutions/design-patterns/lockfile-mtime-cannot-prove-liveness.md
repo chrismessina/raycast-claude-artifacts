@@ -10,7 +10,7 @@ related_components:
   - development_workflow
   - testing_framework
 applies_when:
-  - "Serialising concurrent read-modify-write on a shared file from a shell hook or script"
+  - "Serializing concurrent read-modify-write on a shared file from a shell hook or script"
   - "Reaching for an mtime/age-based stale-lock reaper because the platform lacks `flock(1)`"
   - "A concurrency fix is about to be declared verified because a burst test came back green"
   - "Choosing a mutual-exclusion primitive that must survive a holder killed by SIGKILL, sleep, or paging"
@@ -163,7 +163,7 @@ threshold and all, by a process the hook knows nothing about. The kernel lock
 had nothing to agree on.
 
 **Fallback: no perl ⇒ log and skip** (`scripts/record-artifact.sh:189-192`).
-Writing unserialised would be worse than not writing. A lost row beats a corrupt
+Writing unserialized would be worse than not writing. A lost row beats a corrupt
 index, and the hook's no-fail contract forbids surfacing it as an error.
 
 Two related defects were fixed in the same review pass, both secondary to the
@@ -233,7 +233,7 @@ of any lock before writing a test:
 
 **A green concurrency test is weak evidence.** Both bad designs passed. "Measured
 40/40" proved the test was too fast to trip the window, not that the window was
-gone. Tuning a threshold until the suite goes green is optimising the test's
+gone. Tuning a threshold until the suite goes green is optimizing the test's
 blindness. A concurrency test worth trusting has to be *able* to fail:
 
 - **Vary timing rather than repeating one fast burst.** Insert random sleeps
