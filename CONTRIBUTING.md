@@ -53,7 +53,24 @@ There is no artifacts API for individual users, so the extension reads a local f
 - The `src/utils/` modules import `@chrismessina/raycast-kit` by subpath (`/errors`, `/plural`) so
   they load in plain Node, without `@raycast/api`.
 
-The README's **Windows support** section lists what a Windows port needs.
+## Help port it to Windows
+
+Claude Artifacts is macOS-only, and not for any reason in the UI: the hook that fills the index is
+`bash` plus `jq`, and Claude Code on Windows would need a PowerShell equivalent. Chris doesn't run
+Windows, so he can't build or verify the port, and shipping an untested platform claim is worse than
+declaring macOS-only. If you develop on Windows, this is the most useful contribution the extension
+could get. Here is what it would take:
+
+1. **`scripts/record-artifact.ps1`** — a PowerShell port of the hook. The logic is small but the hard parts are not the syntax: it needs the same **upsert by `id`** (republishing reuses the URL, so appending duplicates), the same **atomic write**, and the same **kernel-backed cross-process lock**. That last one is where the bash version lost two rounds: a lockfile-plus-age-based-reaper design silently drops rows under burst publishing and cannot be fixed by tuning the threshold — see [`docs/hook-payload.md`](https://github.com/chrismessina/raycast-claude-artifacts/blob/main/docs/hook-payload.md). On Windows the equivalent is an exclusive `FileStream` (`[System.IO.FileShare]::None`), which the OS releases on process death; do not reimplement the reaper.
+2. **`platforms: ["macOS", "Windows"]`** in `package.json`, plus restoring the platform-explicit form on the one custom shortcut (`{ macOS: …, Windows: … }` on "Reveal Index File" — a bare `cmd` binding does not exist on Windows).
+3. **Verifying `$HOME` expansion**, or substituting `$env:USERPROFILE`, in the hook's `command` field on Windows. This is unverified there; on macOS it works (see [`docs/hook-payload.md`](https://github.com/chrismessina/raycast-claude-artifacts/blob/main/docs/hook-payload.md)).
+4. **Confirming the payload shape is identical** on Windows — run [`scripts/probe-artifact-hook.sh`](https://github.com/chrismessina/raycast-claude-artifacts/blob/main/scripts/probe-artifact-hook.sh)'s PowerShell equivalent and compare against the captured macOS payload.
+
+There's a plausible better path than a second script: a **"Setup Hook" command** inside the extension that writes the correct hook for the host platform, using [`runPowerShellScript`](https://developers.raycast.com/utilities/functions/runpowershellscript) on Windows. That would improve the setup story on macOS too, which today is "copy a file and hand-edit JSON."
+
+Attach a capture from the probe (step 4) to your issue or pull request. It answers whether the
+payload shape holds on Windows, which is the one fact the port depends on and the one Chris can't
+check himself.
 
 ## Before you open a pull request
 
