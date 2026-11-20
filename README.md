@@ -221,6 +221,8 @@ There's a plausible better path than a second script: a **"Setup Hook" command**
 
 A capture from the probe (step 4) is genuinely the most useful thing you could attach: it answers whether the payload shape holds on Windows, which is the one fact the port depends on and the one I cannot get myself.
 
+Want to contribute? See [CONTRIBUTING.md](https://github.com/chrismessina/raycast-claude-artifacts/blob/main/CONTRIBUTING.md).
+
 ## License
 
 MIT

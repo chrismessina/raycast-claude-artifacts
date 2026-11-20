@@ -40,3 +40,6 @@ compiled_raycast_rust
 # Getting only half of this wrong is how a handoff doc carrying seven absolute
 # machine paths reached raycast/extensions#30530.
 .github/.private/
+
+# Mirror-only contributor guide, kept out of the Store PR (see contributing-template.md)
+CONTRIBUTING.md
